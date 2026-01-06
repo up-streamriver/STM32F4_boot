@@ -1,0 +1,22 @@
+{
+  "configurations": [
+    {
+      "browse": {
+        "limitSymbolsToIncludedHeaders": true
+      },
+      "cStandard": "${default}",
+      "compilerPath": "E:/mingw/MinGW/bin/gcc.exe",
+      "cppStandard": "${default}",
+      "defines": [
+        "STM32F40_41xxx",
+        "USE_STDPERIPH_DRIVER"
+      ],
+      "includePath": [
+        "${workspaceFolder}/**"
+      ],
+      "intelliSenseMode": "windows-gcc-x64",
+      "name": "windows-gcc-x64"
+    }
+  ],
+  "version": 4
+}
