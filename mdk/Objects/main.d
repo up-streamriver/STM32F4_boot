@@ -34,3 +34,10 @@
 .\objects\main.o: ..\firmware\driver\inc\stm32f4xx_dac.h
 .\objects\main.o: ..\firmware\driver\inc\stm32f4xx_dcmi.h
 .\objects\main.o: ..\firmware\driver\inc\stm32f4xx_fsmc.h
+.\objects\main.o: ..\app\board.h
+.\objects\main.o: F:\Keil_v5\ARM\ARMCOMPLIER506\Bin\..\include\stdio.h
+.\objects\main.o: ..\boot\bl_uart.h
+.\objects\main.o: F:\Keil_v5\ARM\ARMCOMPLIER506\Bin\..\include\string.h
+.\objects\main.o: F:\Keil_v5\ARM\ARMCOMPLIER506\Bin\..\include\stdarg.h
+.\objects\main.o: ..\component\ringbuffer\ringbuffer.h
+.\objects\main.o: F:\Keil_v5\ARM\ARMCOMPLIER506\Bin\..\include\stdbool.h

@@ -8,8 +8,8 @@
       "args": [],
       "stopAtEntry": false,
       "externalConsole": true,
-      "cwd": "c:/Users/Administrator/Desktop/stm32f407/app",
-      "program": "c:/Users/Administrator/Desktop/stm32f407/app/build/Debug/outDebug",
+      "cwd": "E:/STM32F4_boot/app",
+      "program": "E:/STM32F4_boot/app/build/Debug/outDebug",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [

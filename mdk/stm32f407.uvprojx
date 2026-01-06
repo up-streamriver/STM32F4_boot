@@ -341,7 +341,7 @@
               <MiscControls></MiscControls>
               <Define>STM32F40_41xxx,USE_STDPERIPH_DRIVER,HSE_VALUE=8000000</Define>
               <Undefine></Undefine>
-              <IncludePath>..\firmware\cmsis\core;..\firmware\cmsis\device;..\firmware\driver\inc</IncludePath>
+              <IncludePath>..\firmware\cmsis\core;..\firmware\cmsis\device;..\firmware\driver\inc;..\boot;..\app;..\component\ringbuffer</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -389,6 +389,11 @@
               <FileName>main.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\app\main.c</FilePath>
+            </File>
+            <File>
+              <FileName>board.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\app\board.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -627,6 +632,26 @@
         </Group>
         <Group>
           <GroupName>third_lib</GroupName>
+        </Group>
+        <Group>
+          <GroupName>boot</GroupName>
+          <Files>
+            <File>
+              <FileName>bl_uart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\boot\bl_uart.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component/ringbuffer</GroupName>
+          <Files>
+            <File>
+              <FileName>ringbuffer.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\component\ringbuffer\ringbuffer.c</FilePath>
+            </File>
+          </Files>
         </Group>
       </Groups>
     </Target>
