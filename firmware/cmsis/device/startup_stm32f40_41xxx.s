@@ -170,6 +170,15 @@ __Vectors_Size  EQU  __Vectors_End - __Vectors
                 AREA    |.text|, CODE, READONLY
 
 ; Reset handler
+JUMP_APP    PROC
+                 EXPORT  JUMP_APP
+				
+				 LDR  SP, [R0,#0]
+				 LDR  PC, [R0,#4]
+				
+                 ENDP
+
+; Reset handler
 Reset_Handler    PROC
                  EXPORT  Reset_Handler             [WEAK]
         IMPORT  SystemInit

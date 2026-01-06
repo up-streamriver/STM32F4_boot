@@ -3,6 +3,7 @@
 
 int main(void)
 {
-	  while(1)
-		{;}
+	extern JUMP_APP(uint32_t base);
+	JUMP_APP(0x8010000);
+	return 0;
 }
