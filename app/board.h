@@ -5,7 +5,7 @@
 #include <stdio.h>
 
 void board_lowlevel_init(void);
-
+void bl_lowlevel_deinit(void);
 
 #endif
 /* BOARD_H*/

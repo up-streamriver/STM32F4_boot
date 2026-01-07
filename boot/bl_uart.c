@@ -75,6 +75,12 @@ void bl_uart_init(void)
 
 }
 
+void bl_uart_deinit(void)
+{
+    USART_Cmd(USART1,DISABLE);    
+    USART_Cmd(USART2,DISABLE);  
+}
+
 void bl_uart_write_data(uint8_t *data,uint32_t length)
 {
     for(uint32_t i=0;i<length;i++)

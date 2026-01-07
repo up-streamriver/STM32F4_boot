@@ -1,4 +1,5 @@
 .\objects\main.o: ..\app\main.c
+.\objects\main.o: ..\app\main.h
 .\objects\main.o: F:\Keil_v5\ARM\ARMCOMPLIER506\Bin\..\include\stdint.h
 .\objects\main.o: ..\firmware\cmsis\device\stm32f4xx.h
 .\objects\main.o: ..\firmware\cmsis\core\core_cm4.h
@@ -41,3 +42,4 @@
 .\objects\main.o: F:\Keil_v5\ARM\ARMCOMPLIER506\Bin\..\include\stdarg.h
 .\objects\main.o: ..\component\ringbuffer\ringbuffer.h
 .\objects\main.o: F:\Keil_v5\ARM\ARMCOMPLIER506\Bin\..\include\stdbool.h
+.\objects\main.o: ..\boot\flash_layout.h

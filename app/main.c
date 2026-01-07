@@ -1,14 +1,11 @@
-#include <stdint.h>
-#include "stm32f4xx.h"
-#include "board.h"
-#include "bl_uart.h"
-#include "ringbuffer.h"
+#include "main.h"
 
 #define bl_uart_buffer_size 4096
 
-static uint8_t *bl_uart_buffer[bl_uart_buffer_size];
+static uint8_t bl_uart_buffer[bl_uart_buffer_size];
 ringbuffer_t serial_rx;
 
+extern void boot_application(void);
 
 void bl_uart_recv_temp_store(uint8_t data)
 {
@@ -17,7 +14,7 @@ void bl_uart_recv_temp_store(uint8_t data)
 
 int main(void)
 {
-	// extern JUMP_APP(uint32_t base);
+	 extern JUMP_APP(uint32_t base);
 	// JUMP_APP(0x8010000);
 	
 	board_lowlevel_init();
@@ -26,11 +23,21 @@ int main(void)
 	bl_uart_recv_callback_register(bl_uart_recv_temp_store);
 	bl_uart_write_string("initial success\r\n");
 	bl_uart_printf("lalalalalla");
+
+	
 	while(1)
 	{	
 		uint8_t data;
 		if(rb8_gets(serial_rx,&data,1))
-			bl_uart_write_data(&data,1);
+		{
+			if(data == 0x05)
+				boot_application();
+			else
+			bl_uart_printf("Data:%02x\r\n",data);
+		}
+			
+
+ 
 	}
 	
 	return 0;

@@ -341,7 +341,7 @@
               <MiscControls></MiscControls>
               <Define>STM32F40_41xxx,USE_STDPERIPH_DRIVER,HSE_VALUE=8000000</Define>
               <Undefine></Undefine>
-              <IncludePath>..\firmware\cmsis\core;..\firmware\cmsis\device;..\firmware\driver\inc;..\boot;..\app;..\component\ringbuffer</IncludePath>
+              <IncludePath>..\firmware\cmsis\core;..\firmware\cmsis\device;..\firmware\driver\inc;..\boot;..\app;..\component\ringbuffer;..\component\crc</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -641,6 +641,11 @@
               <FileType>1</FileType>
               <FilePath>..\boot\bl_uart.c</FilePath>
             </File>
+            <File>
+              <FileName>bootloader.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\boot\bootloader.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -650,6 +655,16 @@
               <FileName>ringbuffer.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\component\ringbuffer\ringbuffer.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component/crc</GroupName>
+          <Files>
+            <File>
+              <FileName>crc32.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\component\crc\crc32.c</FilePath>
             </File>
           </Files>
         </Group>
