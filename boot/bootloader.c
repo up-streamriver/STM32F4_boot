@@ -84,6 +84,19 @@ typedef struct
     uint8_t subcode;
 }bl_inquiry_t;
 
+typedef struct 
+{
+    uint32_t address;
+    uint32_t size;
+}bl_erase_t;
+
+typedef struct 
+{
+    uint32_t address;
+    uint32_t size;
+    uint8_t data[];
+}bl_write_t;
+
 
 static uint8_t bl_uart_buffer[bl_uart_buffer_size];
 static ringbuffer_t serial_rx;
@@ -187,7 +200,18 @@ static void bl_op_reset_handler(uint8_t *data,uint16_t length)
 
 static void bl_op_erase_handler(uint8_t *data,uint16_t length)
 {
-    
+    bl_erase_t *bl_erase = (bl_erase_t*)data;
+    bl_uart_printf("erase add:%08x\r\n",bl_erase->address);
+    bl_uart_printf("erase size:%08x\r\n",bl_erase->size);
+    if(sizeof(bl_erase_t) != length)
+    {   
+        bl_uart_printf("erase length error\r\n");
+        //bl_response_ack(BL_OP_ERASE,BL_ERR_PARAM);
+    }
+    bl_flash_unlock();
+	bl_flash_erase(bl_erase->address,bl_erase->size);
+	bl_flash_lock();
+    bl_uart_printf("erase success");
 }
 
 static void bl_op_read_handler(uint8_t *data,uint16_t length)
@@ -197,7 +221,17 @@ static void bl_op_read_handler(uint8_t *data,uint16_t length)
 
 static void bl_op_write_handler(uint8_t *data,uint16_t length)
 {
-    
+    bl_write_t *bl_write = (bl_write_t*)data;
+    bl_uart_printf("write add:%08x\r\n",bl_write->address);
+    bl_uart_printf("write size:%08x\r\n",bl_write->size);
+    if(sizeof(bl_write_t) +bl_write->size != length)
+    {   
+        bl_uart_printf("write length error\r\n");
+        //bl_response_ack(BL_OP_WRITE,BL_ERR_PARAM);
+    }
+    bl_flash_unlock();
+	bl_flash_write_word(bl_write->address,bl_write->data,bl_write->size);
+	bl_flash_lock();    
 }
 
 static void bl_op_verify_handler(uint8_t *data,uint16_t length)
@@ -301,7 +335,7 @@ bool bl_uart_recv_handler(bl_ctrl_t *bl_ctrl,uint8_t data)
         {   
             bl_uart_printf("sm param\r\n");
             rx->index = 0;
-            while(pkt->index < pkt->length)
+            if(pkt->index < pkt->length)
             {
                 pkt->data[pkt->index++] = rx->data[0];
                 if(pkt->index == pkt->length)

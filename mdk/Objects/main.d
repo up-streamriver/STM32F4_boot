@@ -34,3 +34,4 @@
 .\objects\main.o: ..\firmware\driver\inc\stm32f4xx_dac.h
 .\objects\main.o: ..\firmware\driver\inc\stm32f4xx_dcmi.h
 .\objects\main.o: ..\firmware\driver\inc\stm32f4xx_fsmc.h
+.\objects\main.o: ..\boot\flash_layout.h

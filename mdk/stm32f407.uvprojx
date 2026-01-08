@@ -646,6 +646,11 @@
               <FileType>1</FileType>
               <FilePath>..\boot\bootloader.c</FilePath>
             </File>
+            <File>
+              <FileName>norflash.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\boot\norflash.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
