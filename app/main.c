@@ -3,14 +3,14 @@
 void test(void)
 {
 	uint8_t head = 0xAA;
-	uint8_t op = 0x10;
-	uint16_t length = 0x01;
-	uint8_t data = 0x00;
+	uint8_t op = 0x1F;
+	uint16_t length = 0x00;
+	uint8_t data = 0x02;
 	uint32_t crc = 0;
 	crc = crc32_update(crc,(uint8_t*)&head,1);
 	crc = crc32_update(crc,(uint8_t*)&op,1);
 	crc = crc32_update(crc,(uint8_t*)&length,2);
-	crc = crc32_update(crc,(uint8_t*)&data,1);
+	//crc = crc32_update(crc,(uint8_t*)&data,1);
 
 	bl_uart_printf("crc : %08x",crc);
 }
@@ -25,7 +25,7 @@ int main(void)
 	crc32_init();
 //	bl_uart_write_string("initial success\r\n");
 //	bl_uart_printf("lalalalalla");
-//	test();
+	test();
 	bootlader_main();
 	
 

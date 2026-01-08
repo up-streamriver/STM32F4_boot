@@ -13,6 +13,9 @@
 #define bl_pkt_payload_size    4096
 #define bl_pkt_total_size    bl_pkt_payload_size + bl_pkt_base_size
 
+#define BL_INQUIRY_VERSION_MAJOR 1
+#define BL_INQUIRY_VERSION_MINOR 0
+
 typedef enum
 {
     BL_SM_IDLE,
@@ -51,7 +54,7 @@ typedef enum
 {
     BL_INQUIRY_VERSION,
     BL_MTU_SIZE,
-}bl_inquiry_t;
+}bl_inquiry_code_t;
 
 typedef struct 
 {
@@ -76,6 +79,10 @@ typedef struct
 }bl_ctrl_t;
 
 
+typedef struct 
+{
+    uint8_t subcode;
+}bl_inquiry_t;
 
 
 static uint8_t bl_uart_buffer[bl_uart_buffer_size];
@@ -129,8 +136,120 @@ bool bl_pkt_verify(bl_pkt_t *pkt,uint32_t ccrc)
     return crc == ccrc;
 }
 
-static bl_uart_recv_handler(bl_ctrl_t *bl_ctrl,uint8_t data)
+static void bl_op_inquiry_handler(uint8_t *data,uint16_t length)
+{
+    bl_inquiry_t *bl_inquiry = (bl_inquiry_t*)data;
+    bl_uart_printf("data:%08x\r\n",bl_inquiry->subcode);
+    if(sizeof(bl_inquiry_t) != length)
+    {   
+        bl_uart_printf("inquiry length error\r\n");
+        //bl_response_ack(BL_OP_INQUIRY,BL_ERR_PARAM);
+    }
+    switch (bl_inquiry->subcode)
+    {
+    case BL_INQUIRY_VERSION:
+    {
+        uint8_t version[] = {BL_INQUIRY_VERSION_MAJOR,BL_INQUIRY_VERSION_MINOR}; 
+        bl_uart_write_data((uint8_t *)version,sizeof(version));
+        bl_uart_printf("inquiry version success\r\n");
+        //bl_response(BL_OP_INQUIRY,(uint8_t *)version,sizeof(version));
+        break;
+    }
+    case BL_MTU_SIZE:
+    {
+        uint8_t mut_size = bl_pkt_payload_size; 
+        bl_uart_write_data((uint8_t *)mut_size,sizeof(mut_size));
+        bl_uart_printf("inquiry mtu success\r\n");
+        //bl_response(BL_OP_INQUIRY,(uint8_t *)mut_size,sizeof(mut_size));
+        break;
+    }
+    default:
+    {   
+        bl_uart_printf("inquiry subcode error\r\n");
+        //bl_response_ack(BL_OP_INQUIRY,BL_ERR_PARAM);
+        break;
+    }
+    }
+
+}
+
+static void bl_op_boot_handler(uint8_t *data,uint16_t length)
 {   
+    bl_uart_printf("boot success\r\n");
+    boot_application();
+}
+
+static void bl_op_reset_handler(uint8_t *data,uint16_t length)
+{   
+    bl_uart_printf("reset waiting\r\n");
+    NVIC_SystemReset();
+}
+
+static void bl_op_erase_handler(uint8_t *data,uint16_t length)
+{
+    
+}
+
+static void bl_op_read_handler(uint8_t *data,uint16_t length)
+{
+    ;
+}
+
+static void bl_op_write_handler(uint8_t *data,uint16_t length)
+{
+    
+}
+
+static void bl_op_verify_handler(uint8_t *data,uint16_t length)
+{
+    
+}
+
+static void bl_fullpkt_handler(bl_pkt_t *pkt)
+{
+    switch(pkt->opcode)
+    {
+        case BL_OP_INQUIRY:
+        {
+            bl_op_inquiry_handler(pkt->data,pkt->length);
+            break;
+        }
+        case BL_OP_BOOT:
+        {
+            bl_op_boot_handler(pkt->data,pkt->length);
+            break;
+        }
+        case BL_OP_RESET:
+        {
+            bl_op_reset_handler(pkt->data,pkt->length);
+            break;
+        }    
+        case BL_OP_ERASE:
+        {
+            bl_op_erase_handler(pkt->data,pkt->length);
+            break;
+        }
+        case BL_OP_READ:
+        {
+            bl_op_read_handler(pkt->data,pkt->length);
+            break;
+        }
+        case BL_OP_WRITE:
+        {
+            bl_op_write_handler(pkt->data,pkt->length);
+            break;
+        }
+        case BL_OP_VERIFY:
+        {
+            bl_op_verify_handler(pkt->data,pkt->length);
+            break;
+        }                                           
+    }
+}
+
+bool bl_uart_recv_handler(bl_ctrl_t *bl_ctrl,uint8_t data)
+{   
+    bool full_pkt = false;
     bl_pkt_t *pkt = &bl_ctrl->pkt;
     bl_rx_t *rx = &bl_ctrl->rx;
     rx->data[rx->index ++] = data;
@@ -203,6 +322,7 @@ static bl_uart_recv_handler(bl_ctrl_t *bl_ctrl,uint8_t data)
                 {
                     pkt->crc = crc;
                     //last_pkt_time = bl_now();
+                    full_pkt = true;
                     bl_uart_printf("crc ok\r\n");
                     bl_reset_sm(bl_ctrl);
                   //  bl_response_ack(pkt->opcode,BL_ERR_OK);
@@ -224,6 +344,7 @@ static bl_uart_recv_handler(bl_ctrl_t *bl_ctrl,uint8_t data)
             }
             
     }
+    return full_pkt;
     
 
 }
@@ -243,9 +364,10 @@ void bootlader_main(void)
         if(rb8_gets(serial_rx,&data,1))
         {
             // bl_uart_printf("%02x\r\n",data);
-            bl_uart_recv_handler(&bl_ctrl,data);
+            if(bl_uart_recv_handler(&bl_ctrl,data))
+                bl_fullpkt_handler(&bl_ctrl.pkt);
         }
-
+        
     }
 
 }
