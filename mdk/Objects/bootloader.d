@@ -35,4 +35,10 @@
 .\objects\bootloader.o: ..\firmware\driver\inc\stm32f4xx_dcmi.h
 .\objects\bootloader.o: ..\firmware\driver\inc\stm32f4xx_fsmc.h
 .\objects\bootloader.o: F:\Keil_v5\ARM\ARMCOMPLIER506\Bin\..\include\stdio.h
+.\objects\bootloader.o: F:\Keil_v5\ARM\ARMCOMPLIER506\Bin\..\include\stdbool.h
 .\objects\bootloader.o: ..\boot\flash_layout.h
+.\objects\bootloader.o: ..\boot\bl_uart.h
+.\objects\bootloader.o: F:\Keil_v5\ARM\ARMCOMPLIER506\Bin\..\include\string.h
+.\objects\bootloader.o: F:\Keil_v5\ARM\ARMCOMPLIER506\Bin\..\include\stdarg.h
+.\objects\bootloader.o: ..\component\ringbuffer\ringbuffer.h
+.\objects\bootloader.o: ..\component\crc\crc32.h

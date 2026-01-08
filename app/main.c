@@ -1,15 +1,18 @@
 #include "main.h"
 
-#define bl_uart_buffer_size 4096
-
-static uint8_t bl_uart_buffer[bl_uart_buffer_size];
-ringbuffer_t serial_rx;
-
-extern void boot_application(void);
-
-void bl_uart_recv_temp_store(uint8_t data)
+void test(void)
 {
-	rb8_puts(serial_rx,&data,1);
+	uint8_t head = 0xAA;
+	uint8_t op = 0x10;
+	uint16_t length = 0x01;
+	uint8_t data = 0x00;
+	uint32_t crc = 0;
+	crc = crc32_update(crc,(uint8_t*)&head,1);
+	crc = crc32_update(crc,(uint8_t*)&op,1);
+	crc = crc32_update(crc,(uint8_t*)&length,2);
+	crc = crc32_update(crc,(uint8_t*)&data,1);
+
+	bl_uart_printf("crc : %08x",crc);
 }
 
 int main(void)
@@ -19,26 +22,13 @@ int main(void)
 	
 	board_lowlevel_init();
 	bl_uart_init();
-	serial_rx = rb8_new(bl_uart_buffer,bl_uart_buffer_size);
-	bl_uart_recv_callback_register(bl_uart_recv_temp_store);
-	bl_uart_write_string("initial success\r\n");
-	bl_uart_printf("lalalalalla");
-
+	crc32_init();
+//	bl_uart_write_string("initial success\r\n");
+//	bl_uart_printf("lalalalalla");
+//	test();
+	bootlader_main();
 	
-	while(1)
-	{	
-		uint8_t data;
-		if(rb8_gets(serial_rx,&data,1))
-		{
-			if(data == 0x05)
-				boot_application();
-			else
-			bl_uart_printf("Data:%02x\r\n",data);
-		}
-			
 
- 
-	}
 	
 	return 0;
 }

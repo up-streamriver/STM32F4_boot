@@ -27,15 +27,29 @@ Project File Date:  01/07/2026
 <h2>Output:</h2>
 *** Using Compiler 'V5.06 update 7 (build 960)', folder: 'F:\Keil_v5\ARM\ARMCOMPLIER506\Bin'
 Build target 'stm32f407'
-compiling main.c...
-..\app\main.c(17): warning:  #260-D: explicit type is missing ("int" assumed)
-  	 extern JUMP_APP(uint32_t base);
-..\app\main.c(43): warning:  #111-D: statement is unreachable
-  	return 0;
-..\app\main.c: 2 warnings, 0 errors
+compiling bootloader.c...
+..\component\crc\crc32.h(13): warning:  #1-D: last line of file ends without a newline
+  #endif /*__CRC32_H */
+..\boot\bootloader.c(83): warning:  #260-D: explicit type is missing ("int" assumed)
+  static last_pkt_time;
+..\boot\bootloader.c(91): warning:  #260-D: explicit type is missing ("int" assumed)
+  static bl_response(bl_op_t op,uint8_t *data,uint16_t length)
+..\boot\bootloader.c(108): warning:  #260-D: explicit type is missing ("int" assumed)
+  static bl_response_ack(bl_op_t op,bl_err_t err)
+..\boot\bootloader.c(113): warning:  #260-D: explicit type is missing ("int" assumed)
+  static bl_reset_sm(bl_ctrl_t *bl_ctrl_t)
+..\boot\bootloader.c(132): warning:  #260-D: explicit type is missing ("int" assumed)
+  static bl_uart_recv_handler(bl_ctrl_t *bl_ctrl,uint8_t data)
+..\boot\bootloader.c(270): warning:  #223-D: function "bl_lowlevel_deinit" declared implicitly
+      bl_lowlevel_deinit();
+..\boot\bootloader.c(274): warning:  #1-D: last line of file ends without a newline
+  }
+..\boot\bootloader.c(83): warning:  #177-D: variable "last_pkt_time"  was declared but never referenced
+  static last_pkt_time;
+..\boot\bootloader.c: 9 warnings, 0 errors
 linking...
-Program Size: Code=9132 RO-data=976 RW-data=24 ZI-data=5728  
-".\Objects\stm32f407.axf" - 0 Error(s), 2 Warning(s).
+Program Size: Code=9760 RO-data=976 RW-data=28 ZI-data=7300  
+".\Objects\stm32f407.axf" - 0 Error(s), 9 Warning(s).
 
 <h2>Software Packages used:</h2>
 
@@ -47,7 +61,7 @@ Package Vendor: Keil
 <h2>Collection of Component include folders:</h2>
 
 <h2>Collection of Component Files used:</h2>
-Build Time Elapsed:  00:00:01
+Build Time Elapsed:  00:00:02
 </pre>
 </body>
 </html>
