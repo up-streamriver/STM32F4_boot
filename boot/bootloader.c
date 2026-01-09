@@ -5,6 +5,9 @@
 #include "bl_uart.h"
 #include "ringbuffer.h"
 #include "crc32.h"
+#include "arginfo.h"
+#include "board.h"
+
 
 #define bl_uart_buffer_size 512
 #define BL_TIME_OUT_MS   512
@@ -97,11 +100,20 @@ typedef struct
     uint8_t data[];
 }bl_write_t;
 
+typedef struct 
+{   
+    uint32_t address;
+    uint32_t size;
+    uint32_t crc;
+}bl_verify_t;
+
 
 static uint8_t bl_uart_buffer[bl_uart_buffer_size];
 static ringbuffer_t serial_rx;
-static last_pkt_time;
+static uint32_t  last_pkt_time = 0;
 bl_ctrl_t bl_ctrl;
+
+void boot_application(void);
 
 static void bl_uart_recv_temp_store(uint8_t data)
 {
@@ -161,7 +173,8 @@ static void bl_op_inquiry_handler(uint8_t *data,uint16_t length)
     switch (bl_inquiry->subcode)
     {
     case BL_INQUIRY_VERSION:
-    {
+    {   
+        led_set(false);
         uint8_t version[] = {BL_INQUIRY_VERSION_MAJOR,BL_INQUIRY_VERSION_MINOR}; 
         bl_uart_write_data((uint8_t *)version,sizeof(version));
         bl_uart_printf("inquiry version success\r\n");
@@ -234,9 +247,20 @@ static void bl_op_write_handler(uint8_t *data,uint16_t length)
 	bl_flash_lock();    
 }
 
-static void bl_op_verify_handler(uint8_t *data,uint16_t length)
+static bool bl_op_verify_handler(uint8_t *data,uint16_t length)
 {
-    
+    bl_verify_t *bl_verify = (bl_verify_t*)data;
+    bl_uart_printf("address:%08x\r\n",bl_verify->address);
+    bl_uart_printf("size:%08x\r\n",bl_verify->size);
+    bl_uart_printf("crc:%08x\r\n",bl_verify->crc);
+    if(sizeof(bl_verify_t) != length)
+    {   
+        bl_uart_printf("verify length error\r\n");
+        //bl_response_ack(BL_OP_VERIFY,BL_ERR_PARAM);
+    }
+    uint32_t crc = 0;
+    crc = crc32_update(crc,(uint8_t *)bl_verify->address,bl_verify->size);
+    return crc == bl_verify->crc;
 }
 
 static void bl_fullpkt_handler(bl_pkt_t *pkt)
@@ -357,8 +381,7 @@ bool bl_uart_recv_handler(bl_ctrl_t *bl_ctrl,uint8_t data)
                     pkt->crc = crc;
                     //last_pkt_time = bl_now();
                     full_pkt = true;
-                    bl_uart_printf("crc ok\r\n");
-                    bl_reset_sm(bl_ctrl);
+                    bl_uart_printf("crc ok\r\n");                   
                   //  bl_response_ack(pkt->opcode,BL_ERR_OK);
                 }
                 else
@@ -383,32 +406,121 @@ bool bl_uart_recv_handler(bl_ctrl_t *bl_ctrl,uint8_t data)
 
 }
 
-void bootlader_main(void)
-{
-    serial_rx = rb8_new(bl_uart_buffer,bl_uart_buffer_size);
-	bl_uart_recv_callback_register(bl_uart_recv_temp_store);
-    bl_reset_sm(&bl_ctrl);
-    bl_uart_printf(": sm = %d (BL_SM_IDLE=%d)\r\n", bl_ctrl.sm, BL_SM_IDLE);
+// void bootlader_main(void)
+// {
+//     serial_rx = rb8_new(bl_uart_buffer,bl_uart_buffer_size);
+// 	bl_uart_recv_callback_register(bl_uart_recv_temp_store);
+//     bl_reset_sm(&bl_ctrl);
+//     bl_uart_printf(": sm = %d (BL_SM_IDLE=%d)\r\n", bl_ctrl.sm, BL_SM_IDLE);
 
+//     while(1)
+//     {   
+//         if (rb8_is_empty(serial_rx))
+//             continue;
+//         uint8_t data;
+//         if(rb8_gets(serial_rx,&data,1))
+//         {
+//             // bl_uart_printf("%02x\r\n",data);
+//             if(bl_uart_recv_handler(&bl_ctrl,data))
+//                 bl_fullpkt_handler(&bl_ctrl.pkt);
+//         }
+        
+//     }
+
+// }
+
+void bootlader_main(uint32_t boot_delay)
+{   
+    bool boot_trap = false;
+    static uint32_t main_enter_time = 0;
+    bl_uart_recv_callback_register(bl_uart_recv_temp_store);
+    serial_rx = rb8_new(bl_uart_buffer,bl_uart_buffer_size);
+    main_enter_time = bl_now();
     while(1)
-    {   
+    {
+        if(boot_delay > 0 && !boot_trap)
+        {   
+            static uint32_t last_passed_time = 0;
+            uint32_t time_passed = bl_now() - main_enter_time;
+            if(last_passed_time == 0)
+            {
+                bl_uart_printf("boot app in %d seconds\r\n",boot_delay);
+                last_passed_time = 1;
+                time_passed = 1;
+            }
+            else if(last_passed_time / 1000 != time_passed / 1000)
+            {
+                bl_uart_printf("boot app in %d seconds\r\n",boot_delay - time_passed / 1000);
+            }
+            if(time_passed > boot_delay * 1000)
+            {
+                boot_application();
+            }
+            last_passed_time = time_passed;
+        }
+        
+        if(button_is_pressed())
+        {
+            bl_delay_ms(10);
+            if(button_is_pressed())
+            {
+                led_set(false);
+			    bl_uart_printf("waiting reset");
+			    while(button_is_pressed());
+			    NVIC_SystemReset();
+            }
+        }
+
+
         if (rb8_is_empty(serial_rx))
+        {
+            if(bl_ctrl.rx.index == 0)
+            {   
+                last_pkt_time = bl_now();
+            }
+            else
+            {
+                if(bl_now() - last_pkt_time > BL_TIME_OUT_MS)
+                {
+                    bl_reset_sm(&bl_ctrl);
+                    bl_uart_printf("recv data timeout\r\n");
+                }
+            }
             continue;
+        }
         uint8_t data;
         if(rb8_gets(serial_rx,&data,1))
         {
-            // bl_uart_printf("%02x\r\n",data);
             if(bl_uart_recv_handler(&bl_ctrl,data))
+            {
                 bl_fullpkt_handler(&bl_ctrl.pkt);
-        }
-        
+                bl_reset_sm(&bl_ctrl);
+                boot_trap = true;
+                last_pkt_time = bl_now();
+            }
+        }        
     }
+
 
 }
 
 
 
-void boot_application(void);
+bool verify_application(void)
+{   
+    uint32_t size;
+    uint32_t crc;
+    if(!arginfo_read(&size,&crc))
+    {
+        return false;
+    }
+    uint32_t ccrc = 0;
+    ccrc = crc32_update(ccrc,(uint8_t *)FLASH_APP_ADD,size);
+    bl_uart_printf("size : %08x\r\n",size);
+    bl_uart_printf("ccrc : %08x\r\n",ccrc);
+    return ccrc == crc;
+    
+}
 
 
 void boot_application(void)

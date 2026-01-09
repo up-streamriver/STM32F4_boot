@@ -10,6 +10,7 @@ TX: PA2
 APB1/42MHz
 */
 #include "bl_uart.h"
+
 bl_uart_recv_callback_t bl_uart_recv_callback;
 void bl_uart_init(void)
 {

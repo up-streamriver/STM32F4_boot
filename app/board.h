@@ -4,6 +4,8 @@
 #include "stm32f4xx.h"
 #include <stdio.h>
 #include "norflash.h"
+#include "led.h"
+
 
 void board_lowlevel_init(void);
 void bl_lowlevel_deinit(void);

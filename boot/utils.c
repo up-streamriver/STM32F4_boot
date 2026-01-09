@@ -1,6 +1,6 @@
 #include "stm32f4xx.h"
 
-static uint32_t ticks;
+static volatile uint32_t ticks;
 
 void bl_delay_init(void)
 {

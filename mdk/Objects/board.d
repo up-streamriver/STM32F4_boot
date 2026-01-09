@@ -42,3 +42,4 @@
 .\objects\board.o: F:\Keil_v5\ARM\ARMCOMPLIER506\Bin\..\include\stdarg.h
 .\objects\board.o: ..\boot\flash_layout.h
 .\objects\board.o: ..\boot\bl_uart.h
+.\objects\board.o: ..\boot\led.h

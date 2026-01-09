@@ -42,3 +42,7 @@
 .\objects\bootloader.o: F:\Keil_v5\ARM\ARMCOMPLIER506\Bin\..\include\stdarg.h
 .\objects\bootloader.o: ..\component\ringbuffer\ringbuffer.h
 .\objects\bootloader.o: ..\component\crc\crc32.h
+.\objects\bootloader.o: ..\boot\arginfo.h
+.\objects\bootloader.o: ..\app\board.h
+.\objects\bootloader.o: ..\boot\norflash.h
+.\objects\bootloader.o: ..\boot\led.h
