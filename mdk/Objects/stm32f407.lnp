@@ -48,6 +48,8 @@
 ".\objects\bl_uart.o"
 ".\objects\bootloader.o"
 ".\objects\norflash.o"
+".\objects\arginfo.o"
+".\objects\utils.o"
 ".\objects\ringbuffer.o"
 ".\objects\crc32.o"
 --strict --scatter ".\Objects\stm32f407.sct"

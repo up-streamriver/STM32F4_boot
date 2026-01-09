@@ -35,3 +35,9 @@
 .\objects\main.o: ..\firmware\driver\inc\stm32f4xx_dcmi.h
 .\objects\main.o: ..\firmware\driver\inc\stm32f4xx_fsmc.h
 .\objects\main.o: ..\boot\flash_layout.h
+.\objects\main.o: ..\boot\arginfo.h
+.\objects\main.o: F:\Keil_v5\ARM\ARMCOMPLIER506\Bin\..\include\stdio.h
+.\objects\main.o: F:\Keil_v5\ARM\ARMCOMPLIER506\Bin\..\include\string.h
+.\objects\main.o: F:\Keil_v5\ARM\ARMCOMPLIER506\Bin\..\include\stdbool.h
+.\objects\main.o: F:\Keil_v5\ARM\ARMCOMPLIER506\Bin\..\include\stdarg.h
+.\objects\main.o: ..\boot\bl_uart.h
