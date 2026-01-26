@@ -1,6 +1,6 @@
 Dependencies for Project 'stm32f407', Target 'stm32f407': (DO NOT MODIFY !)
 CompilerVersion: 5060960::V5.06 update 7 (build 960)::.\ARMCOMPLIER506
-F (..\app\main.c)(0x69609FC6)(--c99 --gnu -c --cpu Cortex-M4.fp.sp -g -O1 --apcs=interwork --split_sections -I ..\firmware\cmsis\core -I ..\firmware\cmsis\device -I ..\firmware\driver\inc -I ..\boot -I ..\app -I ..\component\ringbuffer -I ..\component\crc-D__UVISION_VERSION="542" -DSTM32F407xx -DSTM32F40_41xxx -DUSE_STDPERIPH_DRIVER -DHSE_VALUE="8000000"-o .\objects\main.o --omf_browse .\objects\main.crf --depend .\objects\main.d)
+F (..\app\main.c)(0x697729D8)(--c99 --gnu -c --cpu Cortex-M4.fp.sp -g -O1 --apcs=interwork --split_sections -I ..\firmware\cmsis\core -I ..\firmware\cmsis\device -I ..\firmware\driver\inc -I ..\boot -I ..\app -I ..\component\ringbuffer -I ..\component\crc-D__UVISION_VERSION="542" -DSTM32F407xx -DSTM32F40_41xxx -DUSE_STDPERIPH_DRIVER -DHSE_VALUE="8000000"-o .\objects\main.o --omf_browse .\objects\main.crf --depend .\objects\main.d)
 I (..\app\main.h)(0x69609964)
 I (..\firmware\cmsis\device\stm32f4xx.h)(0x67F66F08)
 I (..\firmware\cmsis\core\core_cm4.h)(0x67F66B72)
@@ -42,7 +42,7 @@ I (..\boot\norflash.h)(0x695F56D8)
 I (F:\Keil_v5\ARM\ARMCOMPLIER506\include\string.h)(0x5E8E3CC2)
 I (F:\Keil_v5\ARM\ARMCOMPLIER506\include\stdarg.h)(0x5E8E3CC2)
 I (..\boot\flash_layout.h)(0x69605DF4)
-I (..\boot\bl_uart.h)(0x695DFD7D)
+I (..\boot\bl_uart.h)(0x697729D8)
 I (..\boot\led.h)(0x696083FA)
 I (..\boot\button.h)(0x69609DF8)
 I (..\app\board.h)(0x69609934)
@@ -88,7 +88,7 @@ I (F:\Keil_v5\ARM\ARMCOMPLIER506\include\stdbool.h)(0x5E8E3CC2)
 I (F:\Keil_v5\ARM\ARMCOMPLIER506\include\string.h)(0x5E8E3CC2)
 I (F:\Keil_v5\ARM\ARMCOMPLIER506\include\stdarg.h)(0x5E8E3CC2)
 I (..\boot\flash_layout.h)(0x69605DF4)
-I (..\boot\bl_uart.h)(0x695DFD7D)
+I (..\boot\bl_uart.h)(0x697729D8)
 I (..\boot\led.h)(0x696083FA)
 F (..\firmware\cmsis\device\startup_stm32f40_41xxx.s)(0x695CB3B1)(--cpu Cortex-M4.fp.sp -g --apcs=interwork --pd "__UVISION_VERSION SETA 542" --pd "STM32F407xx SETA 1"--list .\listings\startup_stm32f40_41xxx.lst --xref -o .\objects\startup_stm32f40_41xxx.o --depend .\objects\startup_stm32f40_41xxx.d)
 F (..\firmware\cmsis\device\system_stm32f4xx.c)(0x67F67108)(--c99 --gnu -c --cpu Cortex-M4.fp.sp -g -O1 --apcs=interwork --split_sections -I ..\firmware\cmsis\core -I ..\firmware\cmsis\device -I ..\firmware\driver\inc -I ..\boot -I ..\app -I ..\component\ringbuffer -I ..\component\crc-D__UVISION_VERSION="542" -DSTM32F407xx -DSTM32F40_41xxx -DUSE_STDPERIPH_DRIVER -DHSE_VALUE="8000000"-o .\objects\system_stm32f4xx.o --omf_browse .\objects\system_stm32f4xx.crf --depend .\objects\system_stm32f4xx.d)
@@ -1607,8 +1607,8 @@ I (..\firmware\driver\inc\stm32f4xx_can.h)(0x67F66B74)
 I (..\firmware\driver\inc\stm32f4xx_dac.h)(0x67F66B74)
 I (..\firmware\driver\inc\stm32f4xx_dcmi.h)(0x67F66B74)
 I (..\firmware\driver\inc\stm32f4xx_fsmc.h)(0x67F66B74)
-F (..\boot\bl_uart.c)(0x69609130)(--c99 --gnu -c --cpu Cortex-M4.fp.sp -g -O1 --apcs=interwork --split_sections -I ..\firmware\cmsis\core -I ..\firmware\cmsis\device -I ..\firmware\driver\inc -I ..\boot -I ..\app -I ..\component\ringbuffer -I ..\component\crc-D__UVISION_VERSION="542" -DSTM32F407xx -DSTM32F40_41xxx -DUSE_STDPERIPH_DRIVER -DHSE_VALUE="8000000"-o .\objects\bl_uart.o --omf_browse .\objects\bl_uart.crf --depend .\objects\bl_uart.d)
-I (..\boot\bl_uart.h)(0x695DFD7D)
+F (..\boot\bl_uart.c)(0x69772CEB)(--c99 --gnu -c --cpu Cortex-M4.fp.sp -g -O1 --apcs=interwork --split_sections -I ..\firmware\cmsis\core -I ..\firmware\cmsis\device -I ..\firmware\driver\inc -I ..\boot -I ..\app -I ..\component\ringbuffer -I ..\component\crc-D__UVISION_VERSION="542" -DSTM32F407xx -DSTM32F40_41xxx -DUSE_STDPERIPH_DRIVER -DHSE_VALUE="8000000"-o .\objects\bl_uart.o --omf_browse .\objects\bl_uart.crf --depend .\objects\bl_uart.d)
+I (..\boot\bl_uart.h)(0x697729D8)
 I (..\firmware\cmsis\device\stm32f4xx.h)(0x67F66F08)
 I (..\firmware\cmsis\core\core_cm4.h)(0x67F66B72)
 I (F:\Keil_v5\ARM\ARMCOMPLIER506\include\stdint.h)(0x5E8E3CC2)
@@ -1646,7 +1646,7 @@ I (..\firmware\driver\inc\stm32f4xx_fsmc.h)(0x67F66B74)
 I (F:\Keil_v5\ARM\ARMCOMPLIER506\include\stdio.h)(0x5E8E3CC2)
 I (F:\Keil_v5\ARM\ARMCOMPLIER506\include\string.h)(0x5E8E3CC2)
 I (F:\Keil_v5\ARM\ARMCOMPLIER506\include\stdarg.h)(0x5E8E3CC2)
-F (..\boot\bootloader.c)(0x696094E8)(--c99 --gnu -c --cpu Cortex-M4.fp.sp -g -O1 --apcs=interwork --split_sections -I ..\firmware\cmsis\core -I ..\firmware\cmsis\device -I ..\firmware\driver\inc -I ..\boot -I ..\app -I ..\component\ringbuffer -I ..\component\crc-D__UVISION_VERSION="542" -DSTM32F407xx -DSTM32F40_41xxx -DUSE_STDPERIPH_DRIVER -DHSE_VALUE="8000000"-o .\objects\bootloader.o --omf_browse .\objects\bootloader.crf --depend .\objects\bootloader.d)
+F (..\boot\bootloader.c)(0x69772C68)(--c99 --gnu -c --cpu Cortex-M4.fp.sp -g -O1 --apcs=interwork --split_sections -I ..\firmware\cmsis\core -I ..\firmware\cmsis\device -I ..\firmware\driver\inc -I ..\boot -I ..\app -I ..\component\ringbuffer -I ..\component\crc-D__UVISION_VERSION="542" -DSTM32F407xx -DSTM32F40_41xxx -DUSE_STDPERIPH_DRIVER -DHSE_VALUE="8000000"-o .\objects\bootloader.o --omf_browse .\objects\bootloader.crf --depend .\objects\bootloader.d)
 I (..\firmware\cmsis\device\stm32f4xx.h)(0x67F66F08)
 I (..\firmware\cmsis\core\core_cm4.h)(0x67F66B72)
 I (F:\Keil_v5\ARM\ARMCOMPLIER506\include\stdint.h)(0x5E8E3CC2)
@@ -1684,16 +1684,16 @@ I (..\firmware\driver\inc\stm32f4xx_fsmc.h)(0x67F66B74)
 I (F:\Keil_v5\ARM\ARMCOMPLIER506\include\stdio.h)(0x5E8E3CC2)
 I (F:\Keil_v5\ARM\ARMCOMPLIER506\include\stdbool.h)(0x5E8E3CC2)
 I (..\boot\flash_layout.h)(0x69605DF4)
-I (..\boot\bl_uart.h)(0x695DFD7D)
+I (..\boot\bl_uart.h)(0x697729D8)
 I (F:\Keil_v5\ARM\ARMCOMPLIER506\include\string.h)(0x5E8E3CC2)
 I (F:\Keil_v5\ARM\ARMCOMPLIER506\include\stdarg.h)(0x5E8E3CC2)
-I (..\component\ringbuffer\ringbuffer.h)(0x695F26EE)
+I (..\component\ringbuffer\ringbuffer.h)(0x697729D8)
 I (..\component\crc\crc32.h)(0x695DFD7D)
 I (..\boot\arginfo.h)(0x69605B1F)
 I (..\app\board.h)(0x69609934)
 I (..\boot\norflash.h)(0x695F56D8)
 I (..\boot\led.h)(0x696083FA)
-F (..\boot\norflash.c)(0x695F579A)(--c99 --gnu -c --cpu Cortex-M4.fp.sp -g -O1 --apcs=interwork --split_sections -I ..\firmware\cmsis\core -I ..\firmware\cmsis\device -I ..\firmware\driver\inc -I ..\boot -I ..\app -I ..\component\ringbuffer -I ..\component\crc-D__UVISION_VERSION="542" -DSTM32F407xx -DSTM32F40_41xxx -DUSE_STDPERIPH_DRIVER -DHSE_VALUE="8000000"-o .\objects\norflash.o --omf_browse .\objects\norflash.crf --depend .\objects\norflash.d)
+F (..\boot\norflash.c)(0x697729D8)(--c99 --gnu -c --cpu Cortex-M4.fp.sp -g -O1 --apcs=interwork --split_sections -I ..\firmware\cmsis\core -I ..\firmware\cmsis\device -I ..\firmware\driver\inc -I ..\boot -I ..\app -I ..\component\ringbuffer -I ..\component\crc-D__UVISION_VERSION="542" -DSTM32F407xx -DSTM32F40_41xxx -DUSE_STDPERIPH_DRIVER -DHSE_VALUE="8000000"-o .\objects\norflash.o --omf_browse .\objects\norflash.crf --depend .\objects\norflash.d)
 I (..\boot\norflash.h)(0x695F56D8)
 I (..\firmware\cmsis\device\stm32f4xx.h)(0x67F66F08)
 I (..\firmware\cmsis\core\core_cm4.h)(0x67F66B72)
@@ -1734,8 +1734,8 @@ I (F:\Keil_v5\ARM\ARMCOMPLIER506\include\stdbool.h)(0x5E8E3CC2)
 I (F:\Keil_v5\ARM\ARMCOMPLIER506\include\string.h)(0x5E8E3CC2)
 I (F:\Keil_v5\ARM\ARMCOMPLIER506\include\stdarg.h)(0x5E8E3CC2)
 I (..\boot\flash_layout.h)(0x69605DF4)
-I (..\boot\bl_uart.h)(0x695DFD7D)
-F (..\boot\arginfo.c)(0x696063B8)(--c99 --gnu -c --cpu Cortex-M4.fp.sp -g -O1 --apcs=interwork --split_sections -I ..\firmware\cmsis\core -I ..\firmware\cmsis\device -I ..\firmware\driver\inc -I ..\boot -I ..\app -I ..\component\ringbuffer -I ..\component\crc-D__UVISION_VERSION="542" -DSTM32F407xx -DSTM32F40_41xxx -DUSE_STDPERIPH_DRIVER -DHSE_VALUE="8000000"-o .\objects\arginfo.o --omf_browse .\objects\arginfo.crf --depend .\objects\arginfo.d)
+I (..\boot\bl_uart.h)(0x697729D8)
+F (..\boot\arginfo.c)(0x697729D8)(--c99 --gnu -c --cpu Cortex-M4.fp.sp -g -O1 --apcs=interwork --split_sections -I ..\firmware\cmsis\core -I ..\firmware\cmsis\device -I ..\firmware\driver\inc -I ..\boot -I ..\app -I ..\component\ringbuffer -I ..\component\crc-D__UVISION_VERSION="542" -DSTM32F407xx -DSTM32F40_41xxx -DUSE_STDPERIPH_DRIVER -DHSE_VALUE="8000000"-o .\objects\arginfo.o --omf_browse .\objects\arginfo.crf --depend .\objects\arginfo.d)
 I (..\boot\arginfo.h)(0x69605B1F)
 I (..\firmware\cmsis\device\stm32f4xx.h)(0x67F66F08)
 I (..\firmware\cmsis\core\core_cm4.h)(0x67F66B72)
@@ -1776,7 +1776,7 @@ I (F:\Keil_v5\ARM\ARMCOMPLIER506\include\string.h)(0x5E8E3CC2)
 I (F:\Keil_v5\ARM\ARMCOMPLIER506\include\stdbool.h)(0x5E8E3CC2)
 I (F:\Keil_v5\ARM\ARMCOMPLIER506\include\stdarg.h)(0x5E8E3CC2)
 I (..\boot\flash_layout.h)(0x69605DF4)
-I (..\boot\bl_uart.h)(0x695DFD7D)
+I (..\boot\bl_uart.h)(0x697729D8)
 F (..\boot\utils.c)(0x69607DE2)(--c99 --gnu -c --cpu Cortex-M4.fp.sp -g -O1 --apcs=interwork --split_sections -I ..\firmware\cmsis\core -I ..\firmware\cmsis\device -I ..\firmware\driver\inc -I ..\boot -I ..\app -I ..\component\ringbuffer -I ..\component\crc-D__UVISION_VERSION="542" -DSTM32F407xx -DSTM32F40_41xxx -DUSE_STDPERIPH_DRIVER -DHSE_VALUE="8000000"-o .\objects\utils.o --omf_browse .\objects\utils.crf --depend .\objects\utils.d)
 I (..\firmware\cmsis\device\stm32f4xx.h)(0x67F66F08)
 I (..\firmware\cmsis\core\core_cm4.h)(0x67F66B72)
@@ -1893,7 +1893,7 @@ I (F:\Keil_v5\ARM\ARMCOMPLIER506\include\stdbool.h)(0x5E8E3CC2)
 I (F:\Keil_v5\ARM\ARMCOMPLIER506\include\string.h)(0x5E8E3CC2)
 I (F:\Keil_v5\ARM\ARMCOMPLIER506\include\stdarg.h)(0x5E8E3CC2)
 F (..\component\ringbuffer\ringbuffer.c)(0x695D0EFF)(--c99 --gnu -c --cpu Cortex-M4.fp.sp -g -O1 --apcs=interwork --split_sections -I ..\firmware\cmsis\core -I ..\firmware\cmsis\device -I ..\firmware\driver\inc -I ..\boot -I ..\app -I ..\component\ringbuffer -I ..\component\crc-D__UVISION_VERSION="542" -DSTM32F407xx -DSTM32F40_41xxx -DUSE_STDPERIPH_DRIVER -DHSE_VALUE="8000000"-o .\objects\ringbuffer.o --omf_browse .\objects\ringbuffer.crf --depend .\objects\ringbuffer.d)
-I (..\component\ringbuffer\ringbuffer.h)(0x695F26EE)
+I (..\component\ringbuffer\ringbuffer.h)(0x697729D8)
 I (..\firmware\cmsis\device\stm32f4xx.h)(0x67F66F08)
 I (..\firmware\cmsis\core\core_cm4.h)(0x67F66B72)
 I (F:\Keil_v5\ARM\ARMCOMPLIER506\include\stdint.h)(0x5E8E3CC2)

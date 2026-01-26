@@ -86,6 +86,16 @@ void bl_uart_write_data(uint8_t *data,uint32_t length)
 {
     for(uint32_t i=0;i<length;i++)
     {
+        while(USART_GetFlagStatus(USART1,USART_FLAG_TXE) == RESET);
+        USART_SendData(USART1,data[i]);
+    }
+    while(USART_GetFlagStatus(USART1,USART_FLAG_TC) == RESET);
+}
+
+void bl_uart2_write_data(uint8_t *data,uint32_t length)
+{
+    for(uint32_t i=0;i<length;i++)
+    {
         while(USART_GetFlagStatus(USART2,USART_FLAG_TXE) == RESET);
         USART_SendData(USART2,data[i]);
     }
@@ -95,7 +105,7 @@ void bl_uart_write_data(uint8_t *data,uint32_t length)
 void bl_uart_write_string(const char* str)
 {
     uint32_t length = strlen(str);
-    bl_uart_write_data((uint8_t *)str,length);
+    bl_uart2_write_data((uint8_t *)str,length);
 }
 
 void bl_uart_printf(char *format,...)
@@ -119,7 +129,7 @@ void USART2_IRQHandler(void)
     if(USART_GetITStatus(USART2,USART_IT_RXNE) == SET)
     {
         uint8_t data = USART_ReceiveData(USART2);
-        bl_uart_write_data(&data,1);
+        bl_uart2_write_data(&data,1);
     }
 }
 

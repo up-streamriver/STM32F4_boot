@@ -12,9 +12,9 @@
 #define bl_uart_buffer_size 512
 #define BL_TIME_OUT_MS   512
 #define bl_pkt_head_size    (1+1+2)
-#define bl_pkt_base_size    (1+1+2+4)
-#define bl_pkt_payload_size    4096
-#define bl_pkt_total_size    bl_pkt_payload_size + bl_pkt_base_size
+#define bl_pkt_base_size    8ul
+#define bl_pkt_payload_size    4096ul
+#define bl_pkt_total_size    (bl_pkt_payload_size + bl_pkt_base_size)
 
 #define BL_INQUIRY_VERSION_MAJOR 1
 #define BL_INQUIRY_VERSION_MINOR 0
@@ -56,15 +56,15 @@ typedef enum
 typedef enum
 {
     BL_INQUIRY_VERSION,
-    BL_MTU_SIZE,
-}bl_inquiry_code_t;
+    BL_INQUIRY_MTU_SIZE,
+}bl_inquiry_t;
 
 typedef struct 
 {
     bl_op_t opcode;
     uint16_t length;
     uint32_t crc;
-    uint8_t data[bl_pkt_payload_size];
+    uint8_t data[bl_pkt_total_size];
     uint16_t index;
 }bl_pkt_t;
 
@@ -85,7 +85,7 @@ typedef struct
 typedef struct 
 {
     uint8_t subcode;
-}bl_inquiry_t;
+}bl_inquiry_param_t;
 
 typedef struct 
 {
@@ -163,9 +163,9 @@ bool bl_pkt_verify(bl_pkt_t *pkt,uint32_t ccrc)
 
 static void bl_op_inquiry_handler(uint8_t *data,uint16_t length)
 {
-    bl_inquiry_t *bl_inquiry = (bl_inquiry_t*)data;
+    bl_inquiry_param_t *bl_inquiry = (bl_inquiry_param_t*)data;
     bl_uart_printf("data:%08x\r\n",bl_inquiry->subcode);
-    if(sizeof(bl_inquiry_t) != length)
+    if(sizeof(bl_inquiry_param_t) != length)
     {   
         bl_uart_printf("inquiry length error\r\n");
         //bl_response_ack(BL_OP_INQUIRY,BL_ERR_PARAM);
@@ -176,23 +176,21 @@ static void bl_op_inquiry_handler(uint8_t *data,uint16_t length)
     {   
         led_set(false);
         uint8_t version[] = {BL_INQUIRY_VERSION_MAJOR,BL_INQUIRY_VERSION_MINOR}; 
-        bl_uart_write_data((uint8_t *)version,sizeof(version));
         bl_uart_printf("inquiry version success\r\n");
-        //bl_response(BL_OP_INQUIRY,(uint8_t *)version,sizeof(version));
+        bl_response(BL_OP_INQUIRY,(uint8_t *)version,sizeof(version));
         break;
     }
-    case BL_MTU_SIZE:
+    case BL_INQUIRY_MTU_SIZE:
     {
-        uint8_t mut_size = bl_pkt_payload_size; 
-        bl_uart_write_data((uint8_t *)mut_size,sizeof(mut_size));
+        uint16_t mut_size = bl_pkt_payload_size; 
         bl_uart_printf("inquiry mtu success\r\n");
-        //bl_response(BL_OP_INQUIRY,(uint8_t *)mut_size,sizeof(mut_size));
+        bl_response(BL_OP_INQUIRY,(uint8_t *)&mut_size,sizeof(mut_size));
         break;
     }
     default:
     {   
         bl_uart_printf("inquiry subcode error\r\n");
-        //bl_response_ack(BL_OP_INQUIRY,BL_ERR_PARAM);
+        bl_response_ack(BL_OP_INQUIRY,BL_ERR_PARAM);
         break;
     }
     }
@@ -225,6 +223,7 @@ static void bl_op_erase_handler(uint8_t *data,uint16_t length)
 	bl_flash_erase(bl_erase->address,bl_erase->size);
 	bl_flash_lock();
     bl_uart_printf("erase success");
+    bl_response_ack(BL_OP_ERASE, BL_ERR_OK);
 }
 
 static void bl_op_read_handler(uint8_t *data,uint16_t length)
@@ -340,7 +339,7 @@ bool bl_uart_recv_handler(bl_ctrl_t *bl_ctrl,uint8_t data)
             {
                 rx->index = 0;
                 uint16_t length = *(uint16_t *)rx->data;
-                if(length <= bl_pkt_payload_size)
+                if(length <= bl_pkt_total_size)
                 {
                     pkt->length = length;
                     bl_uart_printf("length = %04x\r\n",length);

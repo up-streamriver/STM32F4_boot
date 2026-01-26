@@ -1,0 +1,9 @@
+.\objects\elog.o: ..\component\easylogger\src\elog.c
+.\objects\elog.o: ..\component\easylogger\inc\elog.h
+.\objects\elog.o: ..\component\easylogger\inc\elog_cfg.h
+.\objects\elog.o: F:\Keil_v5\ARM\ARMCOMPLIER506\Bin\..\include\stdint.h
+.\objects\elog.o: F:\Keil_v5\ARM\ARMCOMPLIER506\Bin\..\include\stddef.h
+.\objects\elog.o: F:\Keil_v5\ARM\ARMCOMPLIER506\Bin\..\include\stdbool.h
+.\objects\elog.o: F:\Keil_v5\ARM\ARMCOMPLIER506\Bin\..\include\string.h
+.\objects\elog.o: F:\Keil_v5\ARM\ARMCOMPLIER506\Bin\..\include\stdarg.h
+.\objects\elog.o: F:\Keil_v5\ARM\ARMCOMPLIER506\Bin\..\include\stdio.h
