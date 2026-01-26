@@ -54,7 +54,10 @@
 ".\objects\button.o"
 ".\objects\ringbuffer.o"
 ".\objects\crc32.o"
---strict --scatter ".\Objects\stm32f407.sct"
+".\objects\elog_port.o"
+".\objects\elog.o"
+".\objects\elog_utils.o"
+--library_type=microlib --strict --scatter ".\Objects\stm32f407.sct"
 --summary_stderr --info summarysizes --map --load_addr_map_info --xref --callgraph --symbols
 --info sizes --info totals --info unused --info veneers
 --list ".\Listings\stm32f407.map" -o .\Objects\stm32f407.axf

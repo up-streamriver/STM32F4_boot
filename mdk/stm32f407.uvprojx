@@ -10,7 +10,6 @@
       <TargetName>stm32f407</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
-      <pArmCC>5060960::V5.06 update 7 (build 960)::.\ARMCOMPLIER506</pArmCC>
       <pCCUsed>5060960::V5.06 update 7 (build 960)::.\ARMCOMPLIER506</pCCUsed>
       <uAC6>0</uAC6>
       <TargetOption>
@@ -191,7 +190,7 @@
             <hadIRAM2>1</hadIRAM2>
             <hadIROM2>0</hadIROM2>
             <StupSel>8</StupSel>
-            <useUlib>0</useUlib>
+            <useUlib>1</useUlib>
             <EndSel>0</EndSel>
             <uLtcg>0</uLtcg>
             <nSecure>0</nSecure>
@@ -315,7 +314,7 @@
           </ArmAdsMisc>
           <Cads>
             <interw>1</interw>
-            <Optim>2</Optim>
+            <Optim>1</Optim>
             <oTime>0</oTime>
             <SplitLS>0</SplitLS>
             <OneElfS>1</OneElfS>
@@ -341,7 +340,7 @@
               <MiscControls></MiscControls>
               <Define>STM32F40_41xxx,USE_STDPERIPH_DRIVER,HSE_VALUE=8000000</Define>
               <Undefine></Undefine>
-              <IncludePath>..\firmware\cmsis\core;..\firmware\cmsis\device;..\firmware\driver\inc;..\boot;..\app;..\component\ringbuffer;..\component\crc</IncludePath>
+              <IncludePath>..\firmware\cmsis\core;..\firmware\cmsis\device;..\firmware\driver\inc;..\boot;..\app;..\component\ringbuffer;..\component\crc;..\component\easylogger\inc</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -690,6 +689,26 @@
               <FileName>crc32.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\component\crc\crc32.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component/easylogger</GroupName>
+          <Files>
+            <File>
+              <FileName>elog_port.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\component\easylogger\port\elog_port.c</FilePath>
+            </File>
+            <File>
+              <FileName>elog.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\component\easylogger\src\elog.c</FilePath>
+            </File>
+            <File>
+              <FileName>elog_utils.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\component\easylogger\src\elog_utils.c</FilePath>
             </File>
           </Files>
         </Group>

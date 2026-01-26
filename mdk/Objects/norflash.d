@@ -41,3 +41,6 @@
 .\objects\norflash.o: F:\Keil_v5\ARM\ARMCOMPLIER506\Bin\..\include\stdarg.h
 .\objects\norflash.o: ..\boot\flash_layout.h
 .\objects\norflash.o: ..\boot\bl_uart.h
+.\objects\norflash.o: ..\component\easylogger\inc\elog.h
+.\objects\norflash.o: ..\component\easylogger\inc\elog_cfg.h
+.\objects\norflash.o: F:\Keil_v5\ARM\ARMCOMPLIER506\Bin\..\include\stddef.h

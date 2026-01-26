@@ -28,6 +28,7 @@
 
 #ifndef _ELOG_CFG_H_
 #define _ELOG_CFG_H_
+#define DEBUG 1
 /*---------------------------------------------------------------------------*/
 /* enable log output. */
 #if DEBUG

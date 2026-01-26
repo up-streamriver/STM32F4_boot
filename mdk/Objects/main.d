@@ -45,3 +45,6 @@
 .\objects\main.o: ..\boot\led.h
 .\objects\main.o: ..\boot\button.h
 .\objects\main.o: ..\app\board.h
+.\objects\main.o: ..\component\easylogger\inc\elog.h
+.\objects\main.o: ..\component\easylogger\inc\elog_cfg.h
+.\objects\main.o: F:\Keil_v5\ARM\ARMCOMPLIER506\Bin\..\include\stddef.h

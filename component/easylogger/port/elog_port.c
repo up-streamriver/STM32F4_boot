@@ -37,6 +37,8 @@
  *
  * @return result
  */
+ 
+ extern uint32_t bl_now(void);
 ElogErrCode elog_port_init(void) {
     ElogErrCode result = ELOG_NO_ERR;
 
@@ -56,6 +58,7 @@ ElogErrCode elog_port_init(void) {
     
 
 
+    NVIC_PriorityGroupConfig(NVIC_PriorityGroup_2);
     NVICStructure.NVIC_IRQChannel = USART2_IRQn;
     NVICStructure.NVIC_IRQChannelCmd = ENABLE;
     NVICStructure.NVIC_IRQChannelPreemptionPriority = 0;
@@ -127,7 +130,7 @@ void elog_port_output_unlock(void) {
  * @return current time
  */
 const char *elog_port_get_time(void) {
-    char stime[32];
+    static char stime[32];
     sprintf(stime,"%06ul",bl_now());
     return stime;
 }
@@ -140,6 +143,7 @@ const char *elog_port_get_time(void) {
 const char *elog_port_get_p_info(void) {
     
     /* add your code here */
+    return "";
     
 }
 
@@ -151,5 +155,6 @@ const char *elog_port_get_p_info(void) {
 const char *elog_port_get_t_info(void) {
     
     /* add your code here */
+    return "";
     
 }

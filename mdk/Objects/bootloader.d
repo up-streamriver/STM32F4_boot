@@ -46,3 +46,6 @@
 .\objects\bootloader.o: ..\app\board.h
 .\objects\bootloader.o: ..\boot\norflash.h
 .\objects\bootloader.o: ..\boot\led.h
+.\objects\bootloader.o: ..\component\easylogger\inc\elog.h
+.\objects\bootloader.o: ..\component\easylogger\inc\elog_cfg.h
+.\objects\bootloader.o: F:\Keil_v5\ARM\ARMCOMPLIER506\Bin\..\include\stddef.h

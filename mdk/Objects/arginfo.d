@@ -41,3 +41,6 @@
 .\objects\arginfo.o: F:\Keil_v5\ARM\ARMCOMPLIER506\Bin\..\include\stdarg.h
 .\objects\arginfo.o: ..\boot\flash_layout.h
 .\objects\arginfo.o: ..\boot\bl_uart.h
+.\objects\arginfo.o: ..\component\easylogger\inc\elog.h
+.\objects\arginfo.o: ..\component\easylogger\inc\elog_cfg.h
+.\objects\arginfo.o: F:\Keil_v5\ARM\ARMCOMPLIER506\Bin\..\include\stddef.h

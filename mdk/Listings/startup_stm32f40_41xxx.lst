@@ -53,32 +53,32 @@ ARM Macro Assembler    Page 1
    34 00000000         ;   <o> Stack Size (in Bytes) <0x0-0xFFFFFFFF:8>
    35 00000000         ; </h>
    36 00000000         
-   37 00000000 00000400 
+   37 00000000 00001000 
                        Stack_Size
-                               EQU              0x00000400
+                               EQU              0x00001000
    38 00000000         
    39 00000000                 AREA             STACK, NOINIT, READWRITE, ALIGN
 =3
    40 00000000         Stack_Mem
                                SPACE            Stack_Size
-   41 00000400         __initial_sp
-   42 00000400         
+   41 00001000         __initial_sp
+   42 00001000         
 
 
 
 ARM Macro Assembler    Page 2 
 
 
-   43 00000400         
-   44 00000400         ; <h> Heap Configuration
-   45 00000400         ;   <o>  Heap Size (in Bytes) <0x0-0xFFFFFFFF:8>
-   46 00000400         ; </h>
-   47 00000400         
-   48 00000400 00000200 
+   43 00001000         
+   44 00001000         ; <h> Heap Configuration
+   45 00001000         ;   <o>  Heap Size (in Bytes) <0x0-0xFFFFFFFF:8>
+   46 00001000         ; </h>
+   47 00001000         
+   48 00001000 00000200 
                        Heap_Size
                                EQU              0x00000200
-   49 00000400         
-   50 00000400                 AREA             HEAP, NOINIT, READWRITE, ALIGN=
+   49 00001000         
+   50 00001000                 AREA             HEAP, NOINIT, READWRITE, ALIGN=
 3
    51 00000000         __heap_base
    52 00000000         Heap_Mem
@@ -482,9 +482,9 @@ ARM Macro Assembler    Page 8
   184 00000008                 IMPORT           SystemInit
   185 00000008                 IMPORT           __main
   186 00000008         
-  187 00000008 4809            LDR              R0, =SystemInit
+  187 00000008 4806            LDR              R0, =SystemInit
   188 0000000A 4780            BLX              R0
-  189 0000000C 4809            LDR              R0, =__main
+  189 0000000C 4806            LDR              R0, =__main
   190 0000000E 4700            BX               R0
   191 00000010                 ENDP
   192 00000010         
@@ -839,40 +839,28 @@ ARM Macro Assembler    Page 13
   413 00000024         ;*******************************************************
                        ************************
   414 00000024                 IF               :DEF:__MICROLIB
-  421 00000024         
-  422 00000024                 IMPORT           __use_two_region_memory
-  423 00000024                 EXPORT           __user_initial_stackheap
-  424 00000024         
+  415 00000024         
+  416 00000024                 EXPORT           __initial_sp
+  417 00000024                 EXPORT           __heap_base
+  418 00000024                 EXPORT           __heap_limit
 
 
 
 ARM Macro Assembler    Page 14 
 
 
-  425 00000024         __user_initial_stackheap
-  426 00000024         
-  427 00000024 4804            LDR              R0, =  Heap_Mem
-  428 00000026 4905            LDR              R1, =(Stack_Mem + Stack_Size)
-  429 00000028 4A05            LDR              R2, = (Heap_Mem +  Heap_Size)
-  430 0000002A 4B06            LDR              R3, = Stack_Mem
-  431 0000002C 4770            BX               LR
-  432 0000002E         
-  433 0000002E 00 00           ALIGN
-  434 00000030         
-  435 00000030                 ENDIF
-  436 00000030         
-  437 00000030                 END
+  419 00000024         
+  420 00000024                 ELSE
+  435                          ENDIF
+  436 00000024         
+  437 00000024                 END
               00000000 
-              00000000 
-              00000000 
-              00000400 
-              00000200 
               00000000 
 Command Line: --debug --xref --diag_suppress=9931 --cpu=Cortex-M4.fp.sp --apcs=
 interwork --depend=.\objects\startup_stm32f40_41xxx.d -o.\objects\startup_stm32
-f40_41xxx.o --predefine="__UVISION_VERSION SETA 542" --predefine="STM32F407xx S
-ETA 1" --list=.\listings\startup_stm32f40_41xxx.lst ..\firmware\cmsis\device\st
-artup_stm32f40_41xxx.s
+f40_41xxx.o --predefine="__MICROLIB SETA 1" --predefine="__UVISION_VERSION SETA
+ 542" --predefine="STM32F407xx SETA 1" --list=.\listings\startup_stm32f40_41xxx
+.lst ..\firmware\cmsis\device\startup_stm32f40_41xxx.s
 
 
 
@@ -893,17 +881,17 @@ Symbol: Stack_Mem
    Definitions
       At line 40 in file ..\firmware\cmsis\device\startup_stm32f40_41xxx.s
    Uses
-      At line 428 in file ..\firmware\cmsis\device\startup_stm32f40_41xxx.s
-      At line 430 in file ..\firmware\cmsis\device\startup_stm32f40_41xxx.s
-
-__initial_sp 00000400
+      None
+Comment: Stack_Mem unused
+__initial_sp 00001000
 
 Symbol: __initial_sp
    Definitions
       At line 41 in file ..\firmware\cmsis\device\startup_stm32f40_41xxx.s
    Uses
       At line 65 in file ..\firmware\cmsis\device\startup_stm32f40_41xxx.s
-Comment: __initial_sp used once
+      At line 416 in file ..\firmware\cmsis\device\startup_stm32f40_41xxx.s
+
 3 symbols
 
 
@@ -925,25 +913,24 @@ Symbol: Heap_Mem
    Definitions
       At line 52 in file ..\firmware\cmsis\device\startup_stm32f40_41xxx.s
    Uses
-      At line 427 in file ..\firmware\cmsis\device\startup_stm32f40_41xxx.s
-      At line 429 in file ..\firmware\cmsis\device\startup_stm32f40_41xxx.s
-
+      None
+Comment: Heap_Mem unused
 __heap_base 00000000
 
 Symbol: __heap_base
    Definitions
       At line 51 in file ..\firmware\cmsis\device\startup_stm32f40_41xxx.s
    Uses
-      None
-Comment: __heap_base unused
+      At line 417 in file ..\firmware\cmsis\device\startup_stm32f40_41xxx.s
+Comment: __heap_base used once
 __heap_limit 00000200
 
 Symbol: __heap_limit
    Definitions
       At line 53 in file ..\firmware\cmsis\device\startup_stm32f40_41xxx.s
    Uses
-      None
-Comment: __heap_limit unused
+      At line 418 in file ..\firmware\cmsis\device\startup_stm32f40_41xxx.s
+Comment: __heap_limit used once
 4 symbols
 
 
@@ -1920,15 +1907,7 @@ Symbol: WWDG_IRQHandler
       At line 83 in file ..\firmware\cmsis\device\startup_stm32f40_41xxx.s
       At line 239 in file ..\firmware\cmsis\device\startup_stm32f40_41xxx.s
 
-__user_initial_stackheap 00000024
-
-Symbol: __user_initial_stackheap
-   Definitions
-      At line 425 in file ..\firmware\cmsis\device\startup_stm32f40_41xxx.s
-   Uses
-      At line 423 in file ..\firmware\cmsis\device\startup_stm32f40_41xxx.s
-Comment: __user_initial_stackheap used once
-96 symbols
+95 symbols
 
 
 
@@ -1942,17 +1921,15 @@ Symbol: Heap_Size
       At line 48 in file ..\firmware\cmsis\device\startup_stm32f40_41xxx.s
    Uses
       At line 52 in file ..\firmware\cmsis\device\startup_stm32f40_41xxx.s
-      At line 429 in file ..\firmware\cmsis\device\startup_stm32f40_41xxx.s
-
-Stack_Size 00000400
+Comment: Heap_Size used once
+Stack_Size 00001000
 
 Symbol: Stack_Size
    Definitions
       At line 37 in file ..\firmware\cmsis\device\startup_stm32f40_41xxx.s
    Uses
       At line 40 in file ..\firmware\cmsis\device\startup_stm32f40_41xxx.s
-      At line 428 in file ..\firmware\cmsis\device\startup_stm32f40_41xxx.s
-
+Comment: Stack_Size used once
 __Vectors_Size 00000188
 
 Symbol: __Vectors_Size
@@ -1984,13 +1961,5 @@ Symbol: __main
    Uses
       At line 189 in file ..\firmware\cmsis\device\startup_stm32f40_41xxx.s
 Comment: __main used once
-__use_two_region_memory 00000000
-
-Symbol: __use_two_region_memory
-   Definitions
-      At line 422 in file ..\firmware\cmsis\device\startup_stm32f40_41xxx.s
-   Uses
-      None
-Comment: __use_two_region_memory unused
-3 symbols
-449 symbols in table
+2 symbols
+446 symbols in table

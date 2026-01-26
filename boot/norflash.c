@@ -1,4 +1,7 @@
 #include "norflash.h"
+#define LOG_LVL     ELOG_LVL_INFO
+#define LOG_TAG     "norflash"
+#include "elog.h"
 
 typedef struct 
 {
@@ -44,11 +47,11 @@ void bl_flash_erase(uint32_t address,uint32_t size)
             while(FLASH_GetFlagStatus(FLASH_FLAG_BSY) == SET);
             if(FLASH_EraseSector(bl_flash_desc[i].sector,VoltageRange_3) != FLASH_COMPLETE)
             {
-                bl_uart_printf("erase failed unknown\r\n");
+                log_i("erase failed unknown\r\n");
             }
             else
             {
-                bl_uart_printf("erase sector :%d size: %08x\r\n",i,bl_flash_desc[i].size);
+                log_i("erase sector :%d size: %08x\r\n",i,bl_flash_desc[i].size);
             }
         }
         if(cur_address >= target_address)
@@ -65,11 +68,7 @@ void bl_flash_write_word(uint32_t address,uint8_t *data,uint32_t size)
     {
         if(FLASH_ProgramWord(address + i,*(uint32_t *)(data+i)) != FLASH_COMPLETE)
         {
-            bl_uart_printf("write failed \r\n");
-        }
-        else
-        {
-            bl_uart_printf("write success");
+            log_i("write failed \r\n");
         }
     }
 }
